@@ -1,6 +1,6 @@
 (ns om.next
   (:refer-clojure :exclude [deftype])
-  (:require [cljs.core :refer [deftype specify! this-as js-arguments]]
+  (:require [cljs.core :refer [deftype specify! js-arguments]]
             [cljs.analyzer :as ana]
             [cljs.analyzer.api :as ana-api]
             [clojure.string :as str]))
