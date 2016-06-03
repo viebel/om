@@ -213,12 +213,12 @@
                    (:name (ana/resolve-var (dissoc env :locals) name))
                    name)
            ctor  `(defn ~(with-meta name {:jsdoc ["@constructor"]}) []
-                    (this-as this#
-                      (.apply js/React.Component this# (js-arguments))
-                      (if-not (nil? (.-initLocalState this#))
-                        (set! (.-state this#) (.initLocalState this#))
-                        (set! (.-state this#) (cljs.core/js-obj)))
-                      this#))
+                    (let [my-this ~(js* "this")]
+                      (.apply js/React.Component my-this (js-arguments))
+                      (if-not (nil? (.-initLocalState my-this))
+                        (set! (.-state my-this) (.initLocalState my-this))
+                        (set! (.-state my-this) (cljs.core/js-obj)))
+                      my-this))
            set-react-proto! `(set! (.-prototype ~name)
                                  (goog.object/clone js/React.Component.prototype))
            ctor  (if (-> name meta :once)
